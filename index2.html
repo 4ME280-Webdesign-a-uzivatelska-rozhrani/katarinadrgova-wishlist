@@ -50,33 +50,39 @@
 <body>
 
   <h1>🎁 Môj wishlist</h1>
-  <div id="wishlist"></div>
+  <div id="wishlist">Načítavam wishlist...</div>
 
   <script>
-    // 🔁 ZMEŇ na svoj reálny BIN ID z JSONBin.io
-    const binId = '683041408a456b7966a44a63';
-    const url = `https://api.jsonbin.io/v3/b/${binId}`;
+    const binId = '683041408a456b7966a44a63'; // ← sem vlož svoj BIN ID
+    const accessKey = '$2a$10$18ficLDJ4NEyTAnn6C1E7.mr7/LBh7hWpOdTbMUvWMPPGa1GUXrZS'; // ← sem vlož svoj X-Access-Key
 
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        const items = data.record.wishlist;
-        const container = document.getElementById('wishlist');
-        container.innerHTML = items.map(item => `
-          <div class="item">
-            <h2>${item.nazov}</h2>
-            <p><strong>Kategória:</strong> ${item.kategoria}</p>
-            <img src="${item.obrazok}" alt="${item.nazov}">
-            <p class="price">${item.cena}</p>
-            <p><a href="${item.link}" target="_blank">Kúpiť darček</a></p>
-            <p class="buyer">🎁 Kupuje: ${item.kupuje || 'Zatiaľ nikto'}</p>
-          </div>
-        `).join('');
-      })
-      .catch(err => {
-        document.getElementById('wishlist').innerText = 'Nepodarilo sa načítať wishlist.';
-        console.error(err);
-      });
+    fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
+      headers: {
+        'X-Access-Key': accessKey
+      }
+    })
+    .then(res => {
+      if (!res.ok) throw new Error('Chyba pri načítaní JSONBin.');
+      return res.json();
+    })
+    .then(data => {
+      const items = data.record.wishlist;
+      const container = document.getElementById('wishlist');
+      container.innerHTML = items.map(item => `
+        <div class="item">
+          <h2>${item.nazov}</h2>
+          <p><strong>Kategória:</strong> ${item.kategoria}</p>
+          <img src="${item.obrazok}" alt="${item.nazov}">
+          <p class="price">${item.cena}</p>
+          <p><a href="${item.link}" target="_blank">Kúpiť darček</a></p>
+          <p class="buyer">🎁 Kupuje: ${item.kupuje || 'Zatiaľ nikto'}</p>
+        </div>
+      `).join('');
+    })
+    .catch(err => {
+      document.getElementById('wishlist').innerText = 'Nepodarilo sa načítať wishlist.';
+      console.error(err);
+    });
   </script>
 
 </body>
