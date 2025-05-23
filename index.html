@@ -6,19 +6,20 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f7f7fb;
+      color: #333;
+      padding: 2rem;
       max-width: 800px;
-      margin: 50px auto;
-      padding: 20px;
-      line-height: 1.6;
+      margin: auto;
     }
     h1, h2 {
-      color: #444;
+      color: #2a2a72;
     }
     img {
       max-width: 100%;
-      height: auto;
-      border-radius: 6px;
+      border-radius: 8px;
+      margin: 10px 0;
     }
     a {
       color: #0056b3;
@@ -27,12 +28,34 @@
     a:hover {
       text-decoration: underline;
     }
+    .loader {
+      font-style: italic;
+      color: #666;
+    }
   </style>
 </head>
 <body>
 
-  <h1>🎁 Wishlist</h1>
-  <div id="wishlist-content">Načítavam wishlist...</div>
+  <h1>🎁 Môj wishlist</h1>
+  <div id="wishlist-content" class="loader">Načítavam obsah...</div>
 
   <script>
-    fetch('https://cdn.jsdelivr.net/gh/TVOJE-UZIVATELSKE-JMENO/
+    // ZMEŇ TUTO URL na svoju reálnu URL cez jsDelivr
+    const markdownUrl = 'https://cdn.jsdelivr.net/gh/katarinadrgova/katarinadrgova-wishlist/wishlist.md';
+
+    fetch(markdownUrl)
+      .then(res => {
+        if (!res.ok) throw new Error('Chyba pri načítaní.');
+        return res.text();
+      })
+      .then(markdown => {
+        document.getElementById('wishlist-content').innerHTML = marked.parse(markdown);
+      })
+      .catch(err => {
+        document.getElementById('wishlist-content').innerText = 'Nepodarilo sa načítať wishlist.';
+        console.error(err);
+      });
+  </script>
+
+</body>
+</html>
