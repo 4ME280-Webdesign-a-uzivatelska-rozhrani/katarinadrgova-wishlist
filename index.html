@@ -48,13 +48,4 @@
         return res.text();
       })
       .then(markdown => {
-        document.getElementById('wishlist-content').innerHTML = marked.parse(markdown);
-      })
-      .catch(err => {
-        document.getElementById('wishlist-content').innerText = 'Nepodarilo sa načítať wishlist.';
-        console.error(err);
-      });
-  </script>
-
-</body>
-</html>
+        // 🖼️ Nahradiť "- foto: (URL)" za markdown obrázok "![](URL)"
