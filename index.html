@@ -6,55 +6,46 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f7f7fb;
-      color: #333;
+      font-family: system-ui, sans-serif;
       padding: 2rem;
       max-width: 800px;
       margin: auto;
-    }
-    h1, h2 {
-      color: #2a2a72;
+      background: #f9f9f9;
     }
     img {
       max-width: 100%;
+      height: auto;
+      margin: 1rem 0;
       border-radius: 8px;
-      margin: 10px 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    a {
-      color: #0056b3;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .loader {
-      font-style: italic;
-      color: #666;
+    hr {
+      margin: 2rem 0;
     }
   </style>
 </head>
 <body>
-
-  <h1>🎁 Môj wishlist</h1>
-  <div id="wishlist-content" class="loader">Načítavam obsah...</div>
+  <h1>🎁 Wishlist</h1>
+  <div id="content">Načítám…</div>
 
   <script>
-    const markdownUrl = 'https://cdn.jsdelivr.net/gh/4ME280-Webdesign-a-uzivatelska-rozhrani/katarinadrgova-wishlist@main/wishlist.md';
+    const rawURL = "https://raw.githubusercontent.com/4ME280-Webdesign-a-uzivatelska-rozhrani/katarinadrgova-wishlist/main/wishlist.md";
 
-    fetch(markdownUrl)
-      .then(res => {
-        if (!res.ok) throw new Error('Chyba pri načítaní.');
-        return res.text();
-      })
+    fetch(rawURL)
+      .then(response => response.text())
       .then(markdown => {
-        document.getElementById('wishlist-content').innerHTML = marked.parse(markdown);
+        // Najdi řádky, které obsahují jen URL obrázku, a převeď je na Markdown obrázky
+        const processed = markdown.replace(
+          /^- (https?:\/\/.*\.(?:png|jpg|jpeg|webp|gif))/gm,
+          (_, url) => `![](${url})`
+        );
+        // Překlad markdownu na HTML
+        document.getElementById('content').innerHTML = marked.parse(processed);
       })
-      .catch(err => {
-        document.getElementById('wishlist-content').innerText = 'Nepodarilo sa načítať wishlist.';
-        console.error(err);
+      .catch(error => {
+        console.error(error);
+        document.getElementById('content').innerHTML = "<p>❌ Nepodařilo se načíst wishlist.</p>";
       });
   </script>
-
 </body>
 </html>
