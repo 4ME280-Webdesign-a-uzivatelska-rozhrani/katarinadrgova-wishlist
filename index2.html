@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wishlist</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f6f8fa;
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #2a2a72;
+    }
+    .item {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .item img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      margin: 0.5rem 0;
+    }
+    .price {
+      font-weight: bold;
+      color: #007b5e;
+    }
+    .buyer {
+      font-style: italic;
+      color: #666;
+    }
+    a {
+      color: #0056b3;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎁 Môj wishlist</h1>
+  <div id="wishlist"></div>
+
+  <script>
+    // 🔁 ZMEŇ na svoj reálny BIN ID z JSONBin.io
+    const binId = 'YOUR_BIN_ID';
+    const url = `https://api.jsonbin.io/v3/b/${binId}`;
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        const items = data.record.wishlist;
+        const container = document.getElementById('wishlist');
+        container.innerHTML = items.map(item => `
+          <div class="item">
+            <h2>${item.nazov}</h2>
+            <p><strong>Kategória:</strong> ${item.kategoria}</p>
+            <img src="${item.obrazok}" alt="${item.nazov}">
+            <p class="price">${item.cena}</p>
+            <p><a href="${item.link}" target="_blank">Kúpiť darček</a></p>
+            <p class="buyer">🎁 Kupuje: ${item.kupuje || 'Zatiaľ nikto'}</p>
+          </div>
+        `).join('');
+      })
+      .catch(err => {
+        document.getElementById('wishlist').innerText = 'Nepodarilo sa načítať wishlist.';
+        console.error(err);
+      });
+  </script>
+
+</body>
+</html>
