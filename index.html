@@ -1,51 +1,115 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="sk">
 <head>
   <meta charset="UTF-8">
-  <title>Wishlist</title>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <title>Wishlist Katarína</title>
   <style>
     body {
-      font-family: system-ui, sans-serif;
-      padding: 2rem;
-      max-width: 800px;
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
       margin: auto;
-      background: #f9f9f9;
     }
-    img {
-      max-width: 100%;
-      height: auto;
-      margin: 1rem 0;
+
+    .product {
+      background: #fff;
       border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      display: flex;
+      gap: 20px;
+      align-items: center;
     }
-    hr {
-      margin: 2rem 0;
+
+    .product img {
+      max-width: 150px;
+      border-radius: 6px;
+    }
+
+    .product-info {
+      flex: 1;
+    }
+
+    .product-info h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .product-info a {
+      text-decoration: none;
+      color: #0077cc;
+      font-weight: bold;
+    }
+
+    .product-info p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .price {
+      font-size: 16px;
+      font-weight: bold;
+      color: #444;
     }
   </style>
 </head>
 <body>
-  <h1>🎁 Wishlist</h1>
-  <div id="content">Načítám…</div>
 
-  <script>
-    const rawURL = "https://raw.githubusercontent.com/4ME280-Webdesign-a-uzivatelska-rozhrani/katarinadrgova-wishlist/main/wishlist.md";
+  <div class="container">
+    <h1>🎁 Wishlist Katarína</h1>
 
-    fetch(rawURL)
-      .then(response => response.text())
-      .then(markdown => {
-        // Najdi řádky, které obsahují jen URL obrázku, a převeď je na Markdown obrázky
-        const processed = markdown.replace(
-          /^- (https?:\/\/.*\.(?:png|jpg|jpeg|webp|gif))/gm,
-          (_, url) => `![](${url})`
-        );
-        // Překlad markdownu na HTML
-        document.getElementById('content').innerHTML = marked.parse(processed);
-      })
-      .catch(error => {
-        console.error(error);
-        document.getElementById('content').innerHTML = "<p>❌ Nepodařilo se načíst wishlist.</p>";
-      });
-  </script>
+    <div class="product">
+      <img src="https://burga.cz/cdn/shop/files/CM-01-AAA.jpg?v=1745417057" alt="BURGA kryt">
+      <div class="product-info">
+        <h2>Kryt na mobil – BURGA</h2>
+        <p class="price">1299 Kč</p>
+        <a href="https://burga.cz/products/sobremesa-iphone-16-pro-max-kryt?_pos=2&_fid=d6f260d57&_ss=c&variant=50514235916631&case-type=Tough%20(MagSafe)&barva-detailů-krytu=N%2FA" target="_blank">Zobraziť produkt</a>
+      </div>
+    </div>
+
+    <div class="product">
+      <img src="https://img-cdn.heureka.group/v1/0a10367e-f3ed-49a1-81cb-f648f7183644.jpg" alt="Lancôme parfém">
+      <div class="product-info">
+        <h2>Parfém – Lancôme La Vie Est Belle</h2>
+        <p class="price">1440 Kč</p>
+        <a href="https://www.notino.cz/lancome/la-vie-est-belle-parfemovana-voda-pro-zeny/" target="_blank">Zobraziť produkt</a>
+      </div>
+    </div>
+
+    <div class="product">
+      <img src="https://cdn.albatrosmedia.cz/Images/Product/98064589/?ts=638761172931200000" alt="Kniha Opravdové zločiny">
+      <div class="product-info">
+        <h2>Kniha – Opravdové zločiny (speciál)</h2>
+        <p class="price">402 Kč</p>
+        <a href="https://www.knihydobrovsky.cz/kniha/opravdove-zlociny-special-792422430" target="_blank">Zobraziť produkt</a>
+      </div>
+    </div>
+
+    <div class="product">
+      <img src="https://cdn.myshoptet.com/usr/www.coffeesheep.sk/user/shop/big/1269_coffee-sheep-kava-colombia-inmaculada-fellows-mix-250g-a.jpg?67db335e" alt="Káva Colombia">
+      <div class="product-info">
+        <h2>Káva – Colombia Inmaculada Fellows Mix</h2>
+        <p class="price">400 Kč</p>
+        <a href="https://www.coffeesheep.sk/specialne-edicie/colombia-inmaculada-fellows-mix/" target="_blank">Zobraziť produkt</a>
+      </div>
+    </div>
+
+    <div class="product">
+      <img src="https://cdn4.jysk.com/getimage/wd3.medium/243700" alt="Lampa Jysk">
+      <div class="product-info">
+        <h2>Lampa – Jysk</h2>
+        <p class="price">550 Kč</p>
+        <a href="https://jysk.cz/domacnost/osvetleni/lampy/stolni-lampa-hjarne-o16xv18-cm-modra" target="_blank">Zobraziť produkt</a>
+      </div>
+    </div>
+
+  </div>
+
 </body>
 </html>
